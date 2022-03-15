@@ -1,15 +1,61 @@
-const Title = (props) => {
-    return (
-        <h1>{props.text}</h1>
-    )
-}
-
 const Root = () => {
-    const [contador, setContador] = React.useState(1)
+    const [contador, setContador] = React.useState(0)
+    
     return (
         <div className = "juego">
-            <Title text = "Lab 6: React Memory Game"/>
-            <h1 onClick = {() =>setContador(contador+1)}>Yo soy un contador: {contador} </h1>    
+            <h1>Lab 6: React Memory Game</h1>
+            <button>New</button>
+            <h2 onClick = {() =>setContador(contador+1)}>Turns: {contador} </h2>    
+            <div className = "container">
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+                <div id = "prueba">
+                    <img src="./images/sins2.png" alt=""></img>
+                </div>
+            </div>
         </div>
     )
 }
