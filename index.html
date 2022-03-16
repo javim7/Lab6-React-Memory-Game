@@ -77,14 +77,13 @@
             const Carta = () => {
                 return (
                     <div id = "carta">
-                        <img src="./images/pornhub-logo.gif" alt=""></img>
-                        {/*<img src="./images/doctor.jpg" alt=""></img>*/}
+                        <img src="pornhub-logo.gif" alt=""></img>
+                        {/*<img src="doctor.jpg" alt=""></img>*/}
                     </div>
                 )
             }
 
-            const defaultCartas = [Carta, Carta]
-            {/*defaultCartas = defaultCartas.sort(() => Math.random() - 0.5)*/}
+            const defaultCartas = [...Carta, ...Carta].sort(() => Math.random() - 0.5)
            
 
             const App = () => {
@@ -98,7 +97,10 @@
                         <button>New</button>
                         <h2 onClick = {() =>setContador(contador+1)}>Turns: {contador} </h2>    
                         <div className = "container">
-                            {cartas.map((carta, i) => <Carta{...carta} key = {i}/>)}
+                            {cartas.map((carta) => <Carta{...carta}/>)}
+                            <div>
+                                <img src="hero.jpg" alt=""></img>
+                            </div>
                         </div>
                     </div>
                 )
