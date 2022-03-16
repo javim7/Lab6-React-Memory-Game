@@ -8,7 +8,6 @@
 
             body {
                 font-family: 'Roboto', sans-serif;
-                
                 background: #1b1b1b;
                 text-align: center  ;
             }
@@ -44,10 +43,14 @@
                 color: #ffa31a;
             }
 
-            .container {
+            img {
+                border-radius: 4px;
+                border: 2px solid #ffa31a;
+                width: 150px;
+                height: 150px;
+            }
 
-                /* grid-template-rows:    repeat(4, 100px);
-                grid-template-columns: repeat(2, 250px); */
+            .container {
                 position: relative;
                 left: 11%;
                 margin-top: 20px;
@@ -57,24 +60,37 @@
                 grid-gap: 20px;
             }
 
-            #prueba {
-                border-radius: 4px;
+            #carta {
+                border-radius: 14px;
                 background-color: #ffa31a;
-                
+                transform-style: preserve-3d;
+                transition: all 0.5s ease;
             }
 
-            img {
-                width: 150px;
-                height: 150px;
-            }
         </style>
     </head>
     <body>
         <div id = "app"></div>
         <script type = "text/babel">
 
+
+            const Carta = () => {
+                return (
+                    <div id = "carta">
+                        <img src="./images/pornhub-logo.gif" alt=""></img>
+                        {/*<img src="./images/doctor.jpg" alt=""></img>*/}
+                    </div>
+                )
+            }
+
+            const defaultCartas = [Carta, Carta]
+            {/*defaultCartas = defaultCartas.sort(() => Math.random() - 0.5)*/}
+           
+
             const App = () => {
+
                 const [contador, setContador] = React.useState(0)
+                const [cartas, setCartas] = React.useState([defaultCartas])
                 
                 return (
                     <div className = "juego">
@@ -82,54 +98,7 @@
                         <button>New</button>
                         <h2 onClick = {() =>setContador(contador+1)}>Turns: {contador} </h2>    
                         <div className = "container">
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
-                            <div id = "prueba">
-                                <img src="./images/sins2.png" alt=""></img>
-                            </div>
+                            {cartas.map((carta, i) => <Carta{...carta} key = {i}/>)}
                         </div>
                     </div>
                 )
