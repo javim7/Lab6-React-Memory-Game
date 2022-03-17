@@ -60,12 +60,48 @@
                 grid-gap: 20px;
             }
 
-            #carta {
-                border-radius: 14px;
-                background-color: #ffa31a;
-                transform-style: preserve-3d;
-                transition: all 0.5s ease;
-            }
+            .thecard{
+                    position: relative;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 10px;
+                    transform-style: preserve-3d;
+                    transition: all 0.8s ease;
+                }
+
+                .thecard:hover{
+                    transform: rotateY(180deg);
+                }
+
+                .thefront{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 10px;
+                    backface-visibility: hidden;
+                    overflow: hidden;
+                    background: #ffc728;
+                    color: #000;
+                }
+
+                .theback{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 10px;
+                    backface-visibility: hidden;
+                    overflow: hidden;
+                    background: #fafafa;
+                    color: #333;
+                    text-align: center;
+                    transform: rotateY(180deg);
+                }
 
         </style>
     </head>
@@ -73,34 +109,38 @@
         <div id = "app"></div>
         <script type = "text/babel">
 
+            const frontales = [
+                
+            ]
 
-            const Carta = () => {
+            const Carta = ({src}) => {
+
                 return (
-                    <div id = "carta">
-                        <img src="pornhub-logo.gif" alt=""></img>
-                        {/*<img src="doctor.jpg" alt=""></img>*/}
+                    <div className="thecard">
+                        <img src = "pornhub-logo.gif" className="thefront"/>
+                        <img src = {src} className="theback"/>
                     </div>
                 )
             }
 
-            const defaultCartas = [...Carta, ...Carta].sort(() => Math.random() - 0.5)
+            //const defaultCartas = [{src: 'fireman.jpg'}, {src: 'hero.jpg'}, {src: 'astronaut.jpg'}, {src: 'delivery.jpg'},{src: 'doctor.jpg'}, {src: 'military.jpg'}, {src: 'police.jpeg'}, {src: 'teacher.jpg'},{src: 'fireman.jpg'}, {src: 'hero.jpg'}, {src: 'astronaut.jpg'}, {src: 'delivery.jpg'},{src: 'doctor.jpg'}, {src: 'military.jpg'}, {src: 'police.jpeg'}, {src: 'teacher.jpg'}].sort(() => Math.random() - 0.5)
            
+            function shuffle() {
+                return [{src: 'fireman.jpg'}, {src: 'hero.jpg'}, {src: 'astronaut.jpg'}, {src: 'delivery.jpg'},{src: 'doctor.jpg'}, {src: 'military.jpg'}, {src: 'police.jpeg'}, {src: 'teacher.jpg'},{src: 'fireman.jpg'}, {src: 'hero.jpg'}, {src: 'astronaut.jpg'}, {src: 'delivery.jpg'},{src: 'doctor.jpg'}, {src: 'military.jpg'}, {src: 'police.jpeg'}, {src: 'teacher.jpg'}].sort(() => Math.random() - 0.5)
+            }
 
             const App = () => {
 
                 const [contador, setContador] = React.useState(0)
-                const [cartas, setCartas] = React.useState([defaultCartas])
+                const [cartas, setCartas] = React.useState(shuffle)
                 
                 return (
                     <div className = "juego">
                         <h1>Lab 6: React Memory Game</h1>
-                        <button>New</button>
+                        <button onClick = {() => setCartas(shuffle)}>New</button>
                         <h2 onClick = {() =>setContador(contador+1)}>Turns: {contador} </h2>    
                         <div className = "container">
                             {cartas.map((carta) => <Carta{...carta}/>)}
-                            <div>
-                                <img src="hero.jpg" alt=""></img>
-                            </div>
                         </div>
                     </div>
                 )
