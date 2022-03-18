@@ -113,6 +113,23 @@
         <div id = "app"></div>
         <script type = "text/babel">
 
+            
+            
+            const johnnies = [
+                {id: 1, src: 'astronaut.jpg', className: 'carta-johnny'},
+                {id: 2, src: 'delivery.jpg', className: 'carta-johnny'},
+                {id: 3, src: 'doctor.jpg', className: 'carta-johnny'},
+                {id: 4, src: 'fireman.jpg', className: 'carta-johnny'},
+                {id: 5, src: 'hero.jpg', className: 'carta-johnny'},
+                {id: 6, src: 'military.jpg', className: 'carta-johnny'},
+                {id: 7, src: 'police.jpeg', className: 'carta-johnny'},
+                {id: 8, src: 'teacher.jpg', className: 'carta-johnny'}
+            ]
+
+            // var parDeJohnnies = [...johnnies, ...johnnies].sort(() => Math.random() - 0.5)
+
+
+
             const App = () => {
 
                 const [contador, setContador] = React.useState(0)
@@ -120,33 +137,44 @@
                 const [abrirCarta, setAbrirCarta] = React.useState([])
                 const [iguales, setIguales] = React.useState([])
                 const [buenas, setBuenas] = React.useState(0)
-                
-                const johnnies = [
-                    {id: 1, src: 'astronaut.jpg'},
-                    {id: 2, src: 'delivery.jpg'},
-                    {id: 3, src: 'doctor.jpg'},
-                    {id: 4, src: 'fireman.jpg'},
-                    {id: 5, src: 'hero.jpg'},
-                    {id: 6, src: 'military.jpg'},
-                    {id: 7, src: 'police.jpeg'},
-                    {id: 8, src: 'teacher.jpg'}
-                ]
-
-                const parDeJohnnies = [...johnnies, ...johnnies]
+                const [parDeJohnnies, setParDeJohnnies] = React.useState([])
                 /*.sort(() => Math.random() - 0.5)*/
 
-                function shuffle(array) {
-                    array.sort(() => Math.random() - 0.5)
+                // function shuffle(array) {
+                //     array.sort(() => Math.random() - 0.5)
+                // }
+                function aleatorizar(){
+
+                    const cartas_temps = [...johnnies, ...johnnies].sort(() => Math.random() - 0.5)
+
+                    console.log(cartas_temps)
+
+                    setParDeJohnnies(cartas_temps)
+                    setBuenas(0)
+                    setContador(0)
+                    
+                    
                 }
+
+                React.useEffect(() => {
+                    aleatorizar()
+
+                },[])
+                
+
+                // React.useEffect(() => {
+                //     parDeJohnnies.sort(() => Math.random() - 0.5)
+                // },[])
+
 
                 React.useEffect(() => {
                     const primerJohnny = parDeJohnnies[abrirCarta[0]];
                     const segundoJohnny = parDeJohnnies[abrirCarta[1]];
 
                     if(segundoJohnny && primerJohnny.id === segundoJohnny.id) {
-                        setMaches((m) => m+1)
+                        // setMaches((m) => m+1)
                         setIguales([...iguales, primerJohnny.id]);   
-                        console.log({matches})
+                        // console.log({matches})
                     }
 
                     if((segundoJohnny && primerJohnny.id === segundoJohnny.id) && (abrirCarta.length === 2)){
@@ -163,13 +191,13 @@
                 console.log({buenas})
 
                 React.useEffect(() => {
-                    if(buenas === 8) {setTimeout(() => window.alert("You've Won!!"), 1000)}
-                },[matches])
+                    if(buenas === 8) {setTimeout(() => window.alert("You've Won!!"), 750)}
+                },[buenas])
 
                 return (
                     <div className = "juego">
                         <h1>Lab 6: React Memory Game</h1>
-                        <button onClick = {() => shuffle(parDeJohnnies)}>New</button>
+                        <button onClick = {() => window.location.reload(false)}>New</button>
                         <h2>Turns: {contador} </h2>    
                         <div className = "container">
                             {parDeJohnnies.map((johnny, i) => {
@@ -181,7 +209,7 @@
 
                                 if(iguales.includes(johnny.id)) voltearCarta = true;
 
-                                return <div className={`carta-johnny ${voltearCarta ? "volteada": ""}`} key = {i} >
+                                return <div className={`${johnny.className} ${voltearCarta ? "volteada": ""}`} key = {i} >
                                             <div className="frente" onClick={() => elFlip(i)}>
                                                 <img src="pornhub-logo.gif" alt=""/>
                                             </div>
