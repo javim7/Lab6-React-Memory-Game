@@ -55,27 +55,31 @@
                 left: 11%;
                 margin-top: 20px;
                 display: grid;
-                grid-template-rows:    repeat(4, 150px);
-                grid-template-columns: repeat(4, 150px); 
+                grid-template-rows:    repeat(4, 153px);
+                grid-template-columns: repeat(4, 153px); 
                 grid-gap: 20px;
             }
 
-            .thecard{
-                    position: relative;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    border-radius: 10px;
-                    transform-style: preserve-3d;
-                    transition: all 0.8s ease;
+            .carta-johnny{
+                position: relative;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 10px;
+                transform-style: preserve-3d;
+                transition: all 0.8s ease;
                 }
 
-                .thecard:hover{
+                /* .carta-johnny:hover{
+                    transform: rotateY(180deg);
+                } */
+                
+                .carta-johnny.volteada{
                     transform: rotateY(180deg);
                 }
 
-                .thefront{
+                .frente{
                     position: absolute;
                     top: 0;
                     left: 0;
@@ -88,7 +92,7 @@
                     color: #000;
                 }
 
-                .theback{
+                .atras{
                     position: absolute;
                     top: 0;
                     left: 0;
@@ -109,38 +113,83 @@
         <div id = "app"></div>
         <script type = "text/babel">
 
-            const frontales = [
-                
-            ]
-
-            const Carta = ({src}) => {
-
-                return (
-                    <div className="thecard">
-                        <img src = "pornhub-logo.gif" className="thefront"/>
-                        <img src = {src} className="theback"/>
-                    </div>
-                )
-            }
-
-            //const defaultCartas = [{src: 'fireman.jpg'}, {src: 'hero.jpg'}, {src: 'astronaut.jpg'}, {src: 'delivery.jpg'},{src: 'doctor.jpg'}, {src: 'military.jpg'}, {src: 'police.jpeg'}, {src: 'teacher.jpg'},{src: 'fireman.jpg'}, {src: 'hero.jpg'}, {src: 'astronaut.jpg'}, {src: 'delivery.jpg'},{src: 'doctor.jpg'}, {src: 'military.jpg'}, {src: 'police.jpeg'}, {src: 'teacher.jpg'}].sort(() => Math.random() - 0.5)
-           
-            function shuffle() {
-                return [{src: 'fireman.jpg'}, {src: 'hero.jpg'}, {src: 'astronaut.jpg'}, {src: 'delivery.jpg'},{src: 'doctor.jpg'}, {src: 'military.jpg'}, {src: 'police.jpeg'}, {src: 'teacher.jpg'},{src: 'fireman.jpg'}, {src: 'hero.jpg'}, {src: 'astronaut.jpg'}, {src: 'delivery.jpg'},{src: 'doctor.jpg'}, {src: 'military.jpg'}, {src: 'police.jpeg'}, {src: 'teacher.jpg'}].sort(() => Math.random() - 0.5)
-            }
-
             const App = () => {
 
                 const [contador, setContador] = React.useState(0)
-                const [cartas, setCartas] = React.useState(shuffle)
+                const [matches, setMaches] = React.useState(0)
+                const [abrirCarta, setAbrirCarta] = React.useState([])
+                const [iguales, setIguales] = React.useState([])
+                const [buenas, setBuenas] = React.useState(0)
                 
+                const johnnies = [
+                    {id: 1, src: 'astronaut.jpg'},
+                    {id: 2, src: 'delivery.jpg'},
+                    {id: 3, src: 'doctor.jpg'},
+                    {id: 4, src: 'fireman.jpg'},
+                    {id: 5, src: 'hero.jpg'},
+                    {id: 6, src: 'military.jpg'},
+                    {id: 7, src: 'police.jpeg'},
+                    {id: 8, src: 'teacher.jpg'}
+                ]
+
+                const parDeJohnnies = [...johnnies, ...johnnies]
+                /*.sort(() => Math.random() - 0.5)*/
+
+                function shuffle(array) {
+                    array.sort(() => Math.random() - 0.5)
+                }
+
+                React.useEffect(() => {
+                    const primerJohnny = parDeJohnnies[abrirCarta[0]];
+                    const segundoJohnny = parDeJohnnies[abrirCarta[1]];
+
+                    if(segundoJohnny && primerJohnny.id === segundoJohnny.id) {
+                        setMaches((m) => m+1)
+                        setIguales([...iguales, primerJohnny.id]);   
+                        console.log({matches})
+                    }
+
+                    if((segundoJohnny && primerJohnny.id === segundoJohnny.id) && (abrirCarta.length === 2)){
+                        setBuenas( (b) => b+1 )
+                    }
+                    if (abrirCarta.length === 2) setTimeout(() => setAbrirCarta([]), 1000);
+                    if (abrirCarta.length === 2) setContador((t) => t=t+1)
+                },[abrirCarta])
+                
+                const elFlip = i => {
+                    setAbrirCarta((abierta) => [...abierta, i])
+                };
+
+                console.log({buenas})
+
+                React.useEffect(() => {
+                    if(buenas === 8) {setTimeout(() => window.alert("You've Won!!"), 1000)}
+                },[matches])
+
                 return (
                     <div className = "juego">
                         <h1>Lab 6: React Memory Game</h1>
-                        <button onClick = {() => setCartas(shuffle)}>New</button>
-                        <h2 onClick = {() =>setContador(contador+1)}>Turns: {contador} </h2>    
+                        <button onClick = {() => shuffle(parDeJohnnies)}>New</button>
+                        <h2>Turns: {contador} </h2>    
                         <div className = "container">
-                            {cartas.map((carta) => <Carta{...carta}/>)}
+                            {parDeJohnnies.map((johnny, i) => {
+
+                                let voltearCarta;
+                                voltearCarta  = false 
+
+                                if(abrirCarta.includes(i)) voltearCarta = true;
+
+                                if(iguales.includes(johnny.id)) voltearCarta = true;
+
+                                return <div className={`carta-johnny ${voltearCarta ? "volteada": ""}`} key = {i} >
+                                            <div className="frente" onClick={() => elFlip(i)}>
+                                                <img src="pornhub-logo.gif" alt=""/>
+                                            </div>
+                                            <div className="atras">
+                                                <img src= {(buenas != 8) ? `${johnny.src}` : 'johnny-sins-dance.gif'} alt=""/>   
+                                            </div>
+                                    </div>
+                            })}
                         </div>
                     </div>
                 )
